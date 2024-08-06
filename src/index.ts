@@ -14,6 +14,8 @@ const DEBUG = true;
   await cauldron.sql.refreshTableSchema();
 
   cauldron.info();
+
+  await cauldron.sql.close();
 })().catch((err) => {
   console.error('RUNNING CAULDRON FAILED', err)
 })

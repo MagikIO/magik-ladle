@@ -2,13 +2,19 @@
   "name": "magik-ladle",
   "version": "1.0.0",
   "description": "A really magik magik-ladle",
+  "type": "module",
   "engines": {
     "node": "v22",
     "npm": "4"
   },
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx src/index.ts",
+    "build": "rollup -c",
+    "start": "node dist/index.js",
     "iterate": "npm version patch && git push origin main --tags && npm publish --access public",
     "changelog": "git cliff --unreleased --prepend CHANGELOG.md"
   },
@@ -20,8 +26,14 @@
   },
   "devDependencies": {
     "@magik_io/lint_golem": "^2.2.3",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
+    "rollup": "^4.20.0",
+    "tslib": "^2.6.3",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.0.1"
   },

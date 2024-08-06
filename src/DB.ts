@@ -15,6 +15,7 @@ interface TableData<
 }
 
 export default class DatabaseManager {
+  public trace = false;
   public debug = false;
   public db: Database<sqlite3.Database, sqlite3.Statement>
   public tables = new Map<string, TableData>();
@@ -166,7 +167,7 @@ CREATE TABLE IF NOT EXISTS "familiars" (
     }
   }
 
-  public static async init(databasePath: string, debug = false) {
+  public static async init(databasePath: string, debug = false, trace = false) {
     try {
       // Move into verbose mode
       if (debug) sqlite3.verbose();
@@ -174,7 +175,7 @@ CREATE TABLE IF NOT EXISTS "familiars" (
       const db = await open({ filename: databasePath, driver: sqlite3.cached.Database });
       // Add a listener for errors
       db.on('error', (err: unknown) => console.error('Database error', err));
-      if (debug) db.on('trace', (s: unknown) => console.log('SQL Executed:', s));
+      if (trace) db.on('trace', (s: unknown) => console.log('SQL Executed:', s));
       // Return a new instance of Database Manager
       const DB = new DatabaseManager({ db, debug });
       await DB.loadTableMetadata();
