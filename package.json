@@ -1,0 +1,36 @@
+{
+  "name": "magik-ladle",
+  "description": "A really magik magik-ladle",
+  "engines": {
+    "node": "v22.5.1",
+    "npm": ""
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "iterate": "npm version patch && git push origin main --tags && npm publish --access public",
+    "changelog": "git cliff --unreleased --prepend CHANGELOG.md"
+  },
+  "devDependencies": {
+    "@magik_io/lint_golem": "^2.2.3",
+    "@types/node": "^22.1.0",
+    "eslint": "^9.8.0",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.1"
+  },
+  "authors": [
+    {
+      "name": "Abourass",
+      "email": "Abourassa@AssetVal.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MagikIO/magik-ladle.git"
+  },
+  "browserslist": [
+    "last 2 version",
+    "> 1%"
+  ],
+  "license": "MIT",
+  "packageManager": "yarn@4.4.0"
+}
