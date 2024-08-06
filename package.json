@@ -1,14 +1,21 @@
 {
   "name": "magik-ladle",
+  "version": "1.0.0",
   "description": "A really magik magik-ladle",
   "engines": {
-    "node": "v22.5.1",
-    "npm": ""
+    "node": "v22",
+    "npm": "4"
   },
   "main": "dist/index.js",
   "scripts": {
     "iterate": "npm version patch && git push origin main --tags && npm publish --access public",
     "changelog": "git cliff --unreleased --prepend CHANGELOG.md"
+  },
+  "dependencies": {
+    "consola": "^3.2.3",
+    "sql-template-tag": "^5.2.1",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@magik_io/lint_golem": "^2.2.3",
@@ -32,11 +39,5 @@
     "> 1%"
   ],
   "license": "MIT",
-  "packageManager": "yarn@4.4.0",
-  "dependencies": {
-    "consola": "^3.2.3",
-    "sql-template-tag": "^5.2.1",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
-  }
+  "packageManager": "yarn@4.4.0"
 }
