@@ -32,5 +32,11 @@
     "> 1%"
   ],
   "license": "MIT",
-  "packageManager": "yarn@4.4.0"
+  "packageManager": "yarn@4.4.0",
+  "dependencies": {
+    "consola": "^3.2.3",
+    "sql-template-tag": "^5.2.1",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  }
 }
