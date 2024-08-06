@@ -8,6 +8,7 @@
   },
   "main": "dist/index.js",
   "scripts": {
+    "dev": "tsx src/index.ts",
     "iterate": "npm version patch && git push origin main --tags && npm publish --access public",
     "changelog": "git cliff --unreleased --prepend CHANGELOG.md"
   },

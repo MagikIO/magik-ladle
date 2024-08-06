@@ -4,16 +4,16 @@ import Cauldron from './Cauldron';
 const DEBUG = true;
 
 (async () => {
-  try {
-    consola.wrapAll();
+  consola.wrapAll();
 
-    const cauldron = await Cauldron.init(DEBUG);
-    if (!cauldron) throw new Error('Cauldron not initialized');
-    consola.success('Cauldron created');
-
-
-    cauldron.info();
+  const cauldron = await Cauldron.init(DEBUG);
+  if (!cauldron) throw new Error('Cauldron not initialized');
+  consola.success('Cauldron created');
 
 
-  } catch (error) { console.error(error); }
-})().catch(console.error)
+  await cauldron.sql.refreshTableSchema();
+
+  cauldron.info();
+})().catch((err) => {
+  console.error('RUNNING CAULDRON FAILED', err)
+})

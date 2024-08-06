@@ -21,38 +21,45 @@ export default class DatabaseManager {
 
   private schemas = new Map([
     ['cauldron' as const, `
-CREATE TABLE "cauldron" (
-	"version"	TEXT NOT NULL COLLATE RTRIM,
-	PRIMARY KEY("version")
+CREATE TABLE IF NOT EXISTS "cauldron" (
+    "version"	TEXT NOT NULL COLLATE RTRIM,
+    PRIMARY KEY("version")
 );`],
     ['dependencies' as const, `
-CREATE TABLE "dependencies" (
-	"id"	INTEGER,
-	"name"	TEXT NOT NULL UNIQUE,
-	"version"	TEXT,
-	PRIMARY KEY("id" AUTOINCREMENT)
+CREATE TABLE IF NOT EXISTS "dependencies" (
+    "id"	INTEGER,
+    "name"	TEXT NOT NULL UNIQUE,
+    "version"	TEXT,
+    PRIMARY KEY("id" AUTOINCREMENT)
 );`],
     ['familiars' as const, `
-CREATE TABLE "familiars" (
-	"id"	integer,
-	"name"	TEXT NOT NULL UNIQUE COLLATE RTRIM,
-	"display_name"	TEXT COLLATE RTRIM,
-	"familiar_type"	TEXT NOT NULL COLLATE RTRIM,
-	"unlocked"	INTEGER NOT NULL DEFAULT 0,
-	"cow_src_ext"	INTEGER DEFAULT 0,
-	"nickname"	TEXT COLLATE NOCASE,
-	PRIMARY KEY("id" AUTOINCREMENT)
+CREATE TABLE IF NOT EXISTS "familiars" (
+    "id"	integer,
+    "name"	TEXT NOT NULL UNIQUE COLLATE RTRIM,
+    "display_name"	TEXT COLLATE RTRIM,
+    "familiar_type"	TEXT NOT NULL COLLATE RTRIM,
+    "unlocked"	INTEGER NOT NULL DEFAULT 0,
+    "cow_src_ext"	INTEGER DEFAULT 0,
+    "nickname"	TEXT COLLATE NOCASE,
+    PRIMARY KEY("id" AUTOINCREMENT)
 );`],
-    ['unlocked_familiars' as const, `CREATE VIEW "unlocked_familiars" AS SELECT * FROM familiars WHERE unlocked = 1;`]
+    ['unlocked_familiars' as const, `CREATE VIEW IF NOT EXISTS "unlocked_familiars" AS SELECT * FROM familiars WHERE unlocked = 1;`]
   ]);
   private familiarSchemas = [
-    `INSERT INTO "familiars" ("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES ('1', 'koala', NULL, 'Woodland-Cute', '1', NULL, NULL);`,
-    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('2', 'hellokitty', 'Hello Kitty', 'Mascot-Cute', '1', NULL, NULL);`,
-    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('3', 'suse', NULL, 'Jungle-Cute', '1', NULL, NULL);`,
-    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('4', 'tux', NULL, 'Artic-Cute', '1', NULL, NULL);`,
-    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('5', 'cock', 'Rooster', 'Farm', '1', NULL, NULL);`,
-    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('6', 'duck', NULL, 'Farm-Urban-Cute', '1', NULL, NULL);`,
-    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('7', 'trogdor', NULL, 'Meme', '1', '1', NULL);`
+    `INSERT INTO "familiars" ("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES ('1', 'koala', NULL, 'Woodland-Cute', '1', NULL, NULL)
+      ON CONFLICT("id") DO UPDATE SET "name"=excluded."name", "display_name"=excluded."display_name", "familiar_type"=excluded."familiar_type", "unlocked"=excluded."unlocked", "cow_src_ext"=excluded."cow_src_ext", "nickname"=excluded."nickname";`,
+    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('2', 'hellokitty', 'Hello Kitty', 'Mascot-Cute', '1', NULL, NULL)
+      ON CONFLICT("id") DO UPDATE SET "name"=excluded."name", "display_name"=excluded."display_name", "familiar_type"=excluded."familiar_type", "unlocked"=excluded."unlocked", "cow_src_ext"=excluded."cow_src_ext", "nickname"=excluded."nickname";`,
+    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('3', 'suse', NULL, 'Jungle-Cute', '1', NULL, NULL)
+      ON CONFLICT("id") DO UPDATE SET "name"=excluded."name", "display_name"=excluded."display_name", "familiar_type"=excluded."familiar_type", "unlocked"=excluded."unlocked", "cow_src_ext"=excluded."cow_src_ext", "nickname"=excluded."nickname";`,
+    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('4', 'tux', NULL, 'Artic-Cute', '1', NULL, NULL)
+      ON CONFLICT("id") DO UPDATE SET "name"=excluded."name", "display_name"=excluded."display_name", "familiar_type"=excluded."familiar_type", "unlocked"=excluded."unlocked", "cow_src_ext"=excluded."cow_src_ext", "nickname"=excluded."nickname";`,
+    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('5', 'cock', 'Rooster', 'Farm', '1', NULL, NULL)
+      ON CONFLICT("id") DO UPDATE SET "name"=excluded."name", "display_name"=excluded."display_name", "familiar_type"=excluded."familiar_type", "unlocked"=excluded."unlocked", "cow_src_ext"=excluded."cow_src_ext", "nickname"=excluded."nickname";`,
+    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('6', 'duck', NULL, 'Farm-Urban-Cute', '1', NULL, NULL)
+      ON CONFLICT("id") DO UPDATE SET "name"=excluded."name", "display_name"=excluded."display_name", "familiar_type"=excluded."familiar_type", "unlocked"=excluded."unlocked", "cow_src_ext"=excluded."cow_src_ext", "nickname"=excluded."nickname";`,
+    `INSERT INTO "familiars"("id", "name", "display_name", "familiar_type", "unlocked", "cow_src_ext", "nickname") VALUES('7', 'trogdor', NULL, 'Meme', '1', '1', NULL)
+      ON CONFLICT("id") DO UPDATE SET "name"=excluded."name", "display_name"=excluded."display_name", "familiar_type"=excluded."familiar_type", "unlocked"=excluded."unlocked", "cow_src_ext"=excluded."cow_src_ext", "nickname"=excluded."nickname";`
   ]
 
   private constructor({ db, debug }: { db: Database<sqlite3.Database, sqlite3.Statement>, debug?: boolean }) {
@@ -88,6 +95,23 @@ CREATE TABLE "familiars" (
     } catch (error) {
       console.error('[DB]', error);
     }
+  }
+
+  public async refreshTableSchema() {
+    for await (const [table, schema] of this.schemas) {
+      await this.db.exec(schema);
+      if (this.debug) consola.success(`Updated ${table} schema`);
+
+      this.tables.set(table, { schema, data: [] });
+    }
+    for await (const familiarSchema of this.familiarSchemas) {
+      await this.db.exec(familiarSchema);
+      if (this.debug) consola.success(`Updated familiar schema`);
+    }
+
+    await this.loadTableMetadata();
+
+    return this.tables;
   }
 
   public toString(pretty = true) {
